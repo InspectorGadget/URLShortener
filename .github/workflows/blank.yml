@@ -1,0 +1,21 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Run a one-line script
+      run: echo starting!
+    - name: Compile Laravel
+      run: |
+        composer install
+        cp .env.example .env
+        php artisan key:generate
+        npm i
+        npm run build --if-present
+        npm test
